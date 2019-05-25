@@ -2,8 +2,9 @@
   "name": "school-backend",
   "version": "0.0.0",
   "private": true,
+  "main": "server.js",
   "scripts": {
-    "start": "nodemon ./bin/www"
+    "start": "node server.js"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
