@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
-const cors = require('cors');
-const School = require('../models/school.js') ; 
+var cors = require('cors');
+var stripe = require('stripe')('sk_test_ZYQncSd0OaFljTBGbBobc7zO00qBScy41v') ; 
 
 var app = express()
 
@@ -9,41 +9,25 @@ app.use(cors());
 router.all("*", cors());
 
 /* GET home page. */
-router.get('/getSchool', function(req, res, next) {
-	
-School.find({}).sort({createdAt : -1}).exec((err,schoolList)=>{
-	if(err){
-		return res.send(err) ; 
-	}else{
-			res.json(schoolList);
-
-	}
-})
-
+router.post('/payme', function(req, res, next) {
+	console.log(req.body);
+	 let total = Math.round(req.body.total*100); 
+	 console.log(total) ; 
+var charge = stripe.charges.create({
+	amount: total,
+	currency: 'usd',
+	source : req.body.token
+},(err,charge)=>{
+	if(err) {
+	throw err ; 
+}
+res.json({
+	success : true , 
+	message : 'payment Done'
+});
+});
 });
 
 
-router.post('/addSchool', function(req, res, next) {
-	let address = req.body.address ; 
-	const schoolSchema = new School({
-		name : req.body.name , 
-		registerStudent : req.body.registerStudent , 
-		address : {
-			street : address.street,
-			subrub :  address.subrub , 
-			postcode : address.postcode,
-			state : address.state 
-		}
-	})
-schoolSchema.save((err,data)=>{
-	if(err){
-		return  res.send(err)
-	}else{
-	res.json({result : data , message : 'add School Successfully'});
-
-	}
-})
-
-});
 
 module.exports = router;

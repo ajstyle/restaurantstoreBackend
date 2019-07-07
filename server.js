@@ -5,7 +5,6 @@
 // dependencies
 const express = require('express');
 const bodyParser = require('body-parser');
-require('./configs/database');
 // create the express app
 const app = express();
 
@@ -14,7 +13,6 @@ const app = express();
 // and json data
 app.use(bodyParser.urlencoded({ extended: true }))
     .use(bodyParser.json());
-
 // register all routers
 // all routes are prefixed with /api
 app.use('/api', require('./routes/index'));
