@@ -76,6 +76,16 @@ router.post('/stripePaymentIntent', function(req, res, next) {
 })();
 });
 
-
+router.get('/stripePaymentCapture/:paymentId', function(req, res, next) {
+			const params = req.params ; 
+			console.log(params.paymentId);
+	(async () => {
+		await stripe.paymentIntents.capture(params.paymentId);
+		res.status(200).json({
+				statusCode : '200' , 
+				message : 'Payment Capture' 
+		});
+	})();
+});
 
 module.exports = router;
