@@ -24,9 +24,7 @@ var charge = stripe.charges.create({
 			success : false ,
 			message: err.raw.message
 	 });
-	 
-	
-	 
+ 
 }
 res.json({
 	success : true , 
@@ -35,6 +33,19 @@ res.json({
 });
 });
 
+router.get('/stripeTerminalGetToken', function(req, res, next) {
 
+	stripe.terminal.connectionTokens.create().then(	token=>{
+		res.status(200).json({
+				
+				secretToken : token.secret , 
+				object : token.object
+		});
+
+
+});
+
+
+});
 
 module.exports = router;
