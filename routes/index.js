@@ -60,7 +60,7 @@ router.get('/stripeTerminalGetToken', function(req, res, next) {
 });
 
 
-router.get('/stripePaymentIntent', function(req, res, next) {
+router.post('/stripePaymentIntent', function(req, res, next) {
 
 (async function() {
   const intent = await stripe.paymentIntents.create({
