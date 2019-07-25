@@ -41,11 +41,41 @@ router.get('/stripeTerminalGetToken', function(req, res, next) {
 				secretToken : token.secret , 
 				object : token.object
 		});
-
-
 });
 
 
 });
+
+router.get('/stripeTerminalGetToken', function(req, res, next) {
+
+	stripe.terminal.connectionTokens.create().then(	token=>{
+		res.status(200).json({
+				
+				secretToken : token.secret , 
+				object : token.object
+		});
+});
+
+
+});
+
+
+router.get('/stripePaymentIntent', function(req, res, next) {
+
+(async function() {
+  const intent = await stripe.paymentIntents.create({
+    amount: 1000,
+    currency: 'usd',
+    payment_method_types: ['card_present'],
+    capture_method: 'manual',
+	});
+	res.status(200).json({
+				
+		intent
+});
+})();
+});
+
+
 
 module.exports = router;
