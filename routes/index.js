@@ -46,25 +46,15 @@ router.get('/stripeTerminalGetToken', function(req, res, next) {
 
 });
 
-router.get('/stripeTerminalGetToken', function(req, res, next) {
 
-	stripe.terminal.connectionTokens.create().then(	token=>{
-		res.status(200).json({
-				
-				secretToken : token.secret , 
-				object : token.object
-		});
-});
-
-
-});
 
 
 router.post('/stripePaymentIntent', function(req, res, next) {
-
+		const total  = Math.round(req.body.total);  
+		console.log(total);
 (async function() {
   const intent = await stripe.paymentIntents.create({
-    amount: 1000,
+    amount: total*100,
     currency: 'usd',
     payment_method_types: ['card_present'],
     capture_method: 'manual',
