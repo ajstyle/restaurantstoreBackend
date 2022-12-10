@@ -12,7 +12,7 @@
         "@types/stripe": "^6.30.8",
         "body-parser": "^1.18.3",
         "cors": "^2.8.5",
-        "express": "^4.16.4",
+        "express": "^4.17.3",
         "mongoose": "^4.13.18",
         "stripe": "^7.4.0",
         "uuid": "^3.3.2"
